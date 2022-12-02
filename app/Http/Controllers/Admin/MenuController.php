@@ -43,12 +43,13 @@ class MenuController extends Controller
     {
         $image = $request->file('image')->store('public/menus');
 
-        $menu = Menu::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $image,
-            'price' => $request->price
-        ]);
+        $menu = new Menu();
+            $menu->name = $request->name;
+            $menu->description = $request->description;
+            $menu->image = $image;
+            $menu->price = $request->price;
+            $menu->quantity = $request->quantity;
+            $menu->save();
 
         if ($request->has('categories')) {
             $menu->categories()->attach($request->categories);
@@ -89,12 +90,13 @@ class MenuController extends Controller
             $image = $request->file('image')->store('public/menus');
         }
 
-        $menu->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $image,
-            'price' => $request->price
-        ]);
+            $menu->name = $request->name;
+            $menu->description = $request->description;
+            $menu->image = $image;
+            $menu->price = $request->price;
+            $menu->quantity = $request->quantity;
+            $menu->save();
+
 
         if ($request->has('categories')) {
             $menu->categories()->sync($request->categories);

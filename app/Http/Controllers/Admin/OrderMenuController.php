@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\OrderStatus;
 use App\Enums\TableStatus;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderMenuStoreRequest;
 use App\Http\Requests\OrderStoreRequest;
+use App\Models\Menu;
+use App\Models\OrderMenu;
 use App\Models\Table;
 use Carbon\Carbon;
 
@@ -20,8 +24,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
-        return view('admin.orders.index', compact('orders'));
+        $order_menu = OrderMenu::all();
+        return view('admin.ordersmenu.index', compact('order_menu'));
     }
 
     /**
@@ -31,8 +35,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $tables = Table::where('status', TableStatus::Avalaiable)->get();
-        return view('admin.orders.create', compact('tables'));
+        $orders = Order::where('status', OrderStatus::Active)->get();
+        $menus = Menu::all();
+        return view('admin.ordersmenu.create', compact('orders','menus'));
     }
 
     /**
@@ -41,22 +46,17 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderStoreRequest $request)
+    public function store(OrderMenuStoreRequest $request)
     {
-        //$table = Table::findOrFail($request->table_id);
-            $order = new Order();
+        $order_menu= new OrderMenu();
+        $order_menu->order_id =  $request->order_id;
+        $order_menu->menu_id =  $request->menu_id;
+        $order_menu->quantity =  $request->quantity;
+        $order_menu->price =  $request->price;
+        $order_menu->save();
 
 
-            $order->table_id =  $request->table_id;
-            $order->order_date =  Carbon::now();
-            $order->status =  $request->status;
-            $order->customer_name =  $request->customer_name;
-            $order->save();
-
-
-
-
-        return redirect()->route('admin.orders.index')->with('success', 'Order created successfully');
+        return redirect()->route('admin.ordersmenu.index')->with('success', 'product added successfully');
     }
 
     /**
@@ -76,10 +76,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(OrderMenu $order_menu)
     {
-        $tables = Table::where('status', TableStatus::Avalaiable)->get();
-        return view('admin.orders.edit', compact('order','tables'));
+        $orders = Order::where('status', OrderStatus::Active)->get();
+        $menus = Menu::all();
+        return view('admin.ordersmenu.edit', compact('order_menu','orders', 'menus'));
     }
 
     /**
@@ -89,11 +90,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(OrderStoreRequest $request, Order $order)
+    public function update(OrderMenuStoreRequest $request, OrderMenu $order_menu)
     {
-        $order->update($request->validated());
+        $order_menu->update($request->validated());
 
-        return to_route('admin.orders.index')->with('success', 'Order updated successfully');
+        return to_route('admin.ordersmenu.index')->with('success', 'Order updated successfully');
     }
 
     /**
@@ -102,11 +103,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(OrderMenu $order_menu)
     {
         //$order->reservations()->delete();
-        $order->delete();
+        $order_menu->delete();
 
-        return to_route('admin.orders.index')->with('danger', 'Order deleted successfully');
+        return to_route('admin.ordersmenu.index')->with('danger', 'Order deleted successfully');
     }
 }

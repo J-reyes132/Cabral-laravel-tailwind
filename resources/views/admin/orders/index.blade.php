@@ -20,6 +20,10 @@
         <thead class="bg-gray-50 dark:bg-gray-700">
             <tr>
                 <th scope="col"
+                class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                Order Id
+                </th>
+                <th scope="col"
                     class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                     Customer Name
                 </th>
@@ -42,7 +46,11 @@
         </thead>
         <tbody>
             @foreach ($orders as $order)
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td
+                    class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $order->id }}
+                </td>
                     <td
                         class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ $order->customer_name }}
@@ -66,7 +74,7 @@
                             <form
                                 class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white"
                                 method="POST"
-                                action="{{ route('admin.tables.destroy', $order->id) }}"
+                                action="{{ route('admin.orders.destroy', $order->id) }}"
                                 onsubmit="return confirm('Are you sure?');">
                                 @csrf
                                 @method('DELETE')
