@@ -23,4 +23,8 @@ class Order extends Model
     {
         return true;
     }
+
+    public function order_menu(){
+        return $this->belongsToMany('order_menus');
+    }
 }
