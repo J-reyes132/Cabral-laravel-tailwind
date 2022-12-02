@@ -19,7 +19,7 @@
                 <div class="flex items-center justify-between">
                     <a class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 md:text-2xl hover:text-green-400"
                         href="/">
-                        Berger
+                        Cabral
                     </a>
                     <!-- Mobile menu button -->
                     <div @click="isOpen = !isOpen" class="flex md:hidden">
@@ -34,7 +34,7 @@
                         </button>
                     </div>
                 </div>
-    
+
                 <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
                 <div :class="isOpen ? 'flex' : 'hidden'"
                     class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0">
@@ -46,7 +46,7 @@
                         href="{{ route('menus.index') }}">Our Menu</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
                         href="{{ route('reservations.step.one') }}">Make Reservation</a>
-    
+
                 </div>
             </nav>
         </div>

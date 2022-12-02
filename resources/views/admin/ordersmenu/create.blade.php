@@ -41,38 +41,13 @@
             </div>
         </div>
         <div class="sm:col-span-6">
-            <label for="price" class="block text-sm font-medium text-gray-700"> Price </label>
-            <div class="mt-1">
-                <input type="number" min="0.00" max="10000.00" step="0.01" id="price" name="price"
-                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-            </div>
-            @error('price')
-                <div class="text-sm text-red-400">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="sm:col-span-6">
-            <label for="quantity" class="block text-sm font-medium text-gray-700"> Available Quantity
+            <label for="quantity" class="block text-sm font-medium text-gray-700"> Quantity
             </label>
             <div class="mt-1">
                 <input type="number" id="quantity" name="quantity"
                     class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
             </div>
             @error('quantity')
-                <div class="text-sm text-red-400">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="sm:col-span-6 pt-5">
-            <label for="table_id" class="block text-sm font-medium text-gray-700">Table</label>
-            <div class="mt-1">
-                <select id="table_id" name="table_id" class="form-multiselect block w-full mt-1">
-                    @foreach ($tables as $table)
-                        <option value="{{ $table->id }}">{{ $table->name }}
-                            ({{ $table->name }})
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            @error('table_id')
                 <div class="text-sm text-red-400">{{ $message }}</div>
             @enderror
         </div>

@@ -7,5 +7,5 @@
 
 
 
-Username - admin@gmail.com<br>
+Username - admin@gmail.com
 Password - password
