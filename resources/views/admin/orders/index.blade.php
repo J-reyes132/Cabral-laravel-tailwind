@@ -9,7 +9,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-end m-2 p-2">
             <a href="{{ route('admin.orders.create') }}"
-            class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">New Order</a>
+            class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">New Order</a>
         </div>
 
 <div class="flex flex-col">
@@ -29,7 +29,7 @@
                 </th>
                 <th scope="col"
                     class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                    Order Date
+                    Table
                 </th>
                 <th scope="col"
                     class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -37,7 +37,7 @@
                 </th>
                 <th scope="col"
                     class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                    Table
+                    Order Date
                 </th>
                 <th scope="col" class="relative py-3 px-6">
                     <span class="sr-only">Edit</span>
@@ -57,7 +57,7 @@
                     </td>
                     <td
                         class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                        {{ $order->order_date }}
+                        {{ $order->table->name }}
                     </td>
                     <td
                         class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
@@ -65,7 +65,7 @@
                     </td>
                     <td
                         class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                        {{ $order->table->name }}
+                        {{ $order->order_date }}
                     </td>
                     <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                         <div class="flex space-x-2">

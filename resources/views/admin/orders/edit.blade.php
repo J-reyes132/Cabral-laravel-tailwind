@@ -18,6 +18,13 @@
         @csrf
         @method('PUT')
         <div class="sm:col-span-6">
+            <label for="customer_name" class="block text-sm font-medium text-gray-700"> Position
+            </label>
+            <div class="mt-1">
+                <input type="number" id="customer_name" name="customer_name"
+                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+            </div>
+        {{-- <div class="sm:col-span-6">
             <label for="customer_name" class="block text-sm font-medium text-gray-700"> customer name </label>
             <div class="mt-1">
                 <input type="text" id="customer_name" name="customer_name" value="{{ $order->costumer_name }}"
@@ -26,7 +33,7 @@
             @error('customer_name')
                 <div class="text-sm text-red-400">{{ $message }}</div>
             @enderror
-        </div>
+        </div> --}}
         <div class="sm:col-span-6 pt-5">
             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
             <div class="mt-1">
