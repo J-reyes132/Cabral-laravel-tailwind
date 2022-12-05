@@ -25,18 +25,18 @@
                 </div>
             </div>
             <div class="w-full h-0.5 bg-indigo-500"></div>
-            @foreach ($orders as $order)
+            @foreach ($invoices as $invoice)
             <div class="flex justify-between p-4">
 
 
                 <div>
-                    <h6 class="font-bold">Order Date : <span class="text-sm font-medium"> {{$order->order_date}}</span></h6>
-                    <h6 class="font-bold">Order ID : <span class="text-sm font-medium"> {{$order->id}}</span></h6>
+                    <h6 class="font-bold">Invoice Date : <span class="text-sm font-medium"> {{$invoice->invoice_date}}</span></h6>
+                    <h6 class="font-bold">Invoice ID : <span class="text-sm font-medium"> {{$invoice->id}}</span></h6>
                 </div>
                 <div class="w-40">
                     <address class="text-sm">
                         <span class="font-bold"> Billed To : </span>
-                        {{$order->customer_name}}
+                        {{$invoice->order->customer_name}}
                     </address>
                 </div>
                 <div></div>
@@ -56,87 +56,56 @@
                                     Quantity
                                 </th>
                                 <th class="px-4 py-2 text-xs text-gray-500 ">
+                                    price
+                                </th>
+                                <th class="px-4 py-2 text-xs text-gray-500 ">
                                     Subtotal
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
-                            @foreach ($orderMenus as $orderMenu)
+                            @foreach ($invoiceOrders as $invoiceOrder)
 
 
                             <tr class="whitespace-nowrap">
                                 <td class="px-6 py-4 text-sm text-gray-500">
-                                    {{$orderMenu->id}}
+                                    {{$invoiceOrder->id}}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm text-gray-900">
-                                        {{$orderMenu->menu->name}}
+                                        {{$invoiceOrder->menu->name}}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-500">{{$orderMenu->quantity}}</div>
+                                    <div class="text-sm text-gray-500">{{$invoiceOrder->quantity}}</div>
                                 </td>
-
                                 <td class="px-6 py-4">
-                                    $30
+                                    <div class="text-sm text-gray-500">{{$invoiceOrder->price}}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{$invoiceOrder->total}}
                                 </td>
                             </tr>
-                            <tr class="whitespace-nowrap">
-                                <td class="px-6 py-4 text-sm text-gray-500">
-                                    2
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900">
-                                        Amazon Brand - Symactive Men's Regular Fit T-Shirt
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-500">2</div>
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-500">
-                                    $60
-                                </td>
-                                <td class="px-6 py-4">
-                                    $12
-                                </td>
-                            </tr>
-                            <tr class="border-b-2 whitespace-nowrap">
-                                <td class="px-6 py-4 text-sm text-gray-500">
-                                    3
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900">
-                                        Amazon Brand - Symactive Men's Regular Fit T-Shirt
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-500">1</div>
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-500">
-                                    $10
-                                </td>
-                                <td class="px-6 py-4">
-                                    $13
-                                </td>
-                            </tr>
+                            @foreach ($invoiceDetails as $invoiceDetail)
                             <tr class="">
                                 <td colspan="3"></td>
                                 <td class="text-sm font-bold">Sub Total</td>
-                                <td class="text-sm font-bold tracking-wider"><b>$950</b></td>
+                                <td class="text-sm font-bold tracking-wider"><b>${{$invoiceDetail->subtotal}}</b></td>
                             </tr>
                             <!--end tr-->
                             <tr>
                                 <th colspan="3"></th>
                                 <td class="text-sm font-bold"><b>Tax Rate</b></td>
-                                <td class="text-sm font-bold"><b>$1.50%</b></td>
+                                <td class="text-sm font-bold"><b>${{$invoiceDetail->itbis}}</b></td>
                             </tr>
                             <!--end tr-->
                             <tr class="text-white bg-gray-800">
                                 <th colspan="3"></th>
                                 <td class="text-sm font-bold"><b>Total</b></td>
-                                <td class="text-sm font-bold"><b>$999.0</b></td>
+                                <td class="text-sm font-bold"><b>${{$invoiceDetail->total}}</b></td>
                             </tr>
                             <!--end tr-->
+                            @endforeach
                             @endforeach
                         </tbody>
                     </table>

@@ -8,6 +8,9 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
+use App\Models\Invoice;
+use App\Models\InvoiceOrder;
+use App\Models\OrderMenu;
 use App\Models\Table;
 use Carbon\Carbon;
 
@@ -82,9 +85,32 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        $order_menu = OrderMenu::where('order_id', $order->id)->get();
+        $invoice = new Invoice();
+        $invoice->order_id = $order->id;
+        $invoice->position = $order->customer_name;
+        $invoice->invoice_date = Carbon::now();
+        $invoice->registered_by = auth()->user()->name;
+        $invoice->save();
+
+        if ($order_menu && count($order_menu)) {
+            foreach ($order_menu as $index ) {
+                $invoice_detail = new InvoiceOrder();
+                $invoice_detail->invoice_id = $invoice->id;
+                $invoice_detail->menu_id = $index->menu_id;
+                $invoice_detail->quantity = $index->quantity;
+                $invoice_detail->price = $index->price;
+                $invoice_detail->total = $index->price * $index->quantity;
+                $invoice_detail->save();
+            }
+        }
+
+        $order->status = OrderStatus::Disable;
+        $order->save();
+
+        return redirect()->route('admin.orders.index')->with('success', 'factura generada correctamente');
     }
 
     /**
@@ -97,6 +123,39 @@ class OrderController extends Controller
     {
         $tables = Table::where('status', TableStatus::Avalaiable)->get();
         return view('admin.orders.edit', compact('order','tables'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function invoice(Order $order)
+    {
+        $order_menu = OrderMenu::where('order_id', $order->id)->get();
+        $invoice = new Invoice();
+        $invoice->order_id = $order->id;
+        $invoice->position = $order->customer_name;
+        $invoice->invoice_date = Carbon::now();
+        $invoice->registered_by = auth()->user()->name;
+        $invoice->save();
+
+        if ($order_menu && count($order_menu)) {
+            foreach ($order_menu as $index ) {
+                $invoice_detail = new InvoiceOrder();
+                $invoice_detail->invoice_id = $invoice->id;
+                $invoice_detail->menu_id = $index->menu_id;
+                $invoice_detail->quantity = $index->quantity;
+                $invoice_detail->price = $index->price;
+                $invoice_detail->total = $index->price * $index->quantity;
+                $invoice_detail->save();
+            }
+        }
+
+        $order->status = OrderStatus::Disable;
+
+        return redirect()->route('admin.orders.index')->with('success', 'factura generada correctamente');
     }
 
     /**
@@ -128,4 +187,6 @@ class OrderController extends Controller
 
         return to_route('admin.orders.index')->with('danger', 'Order deleted successfully');
     }
+
+
 }

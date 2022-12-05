@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\ReservationController;
@@ -44,6 +45,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/orders', OrderController::class);
     Route::resource('/ordersmenu', OrderMenuController::class);
     Route::resource('/users', UserController::class);
+    Route::resource('/invoices', InvoiceController::class);
 });
 
 require __DIR__.'/auth.php';
