@@ -41,7 +41,7 @@ class InvoiceController extends Controller
         foreach($detailTotal as $detail_total){
             $subtotal =+ $detail_total->total;
         }
-        $itbis = $subtotal *0.18;
+        $itbis = $subtotal *0.28;
         $total = $subtotal + $itbis;
 
         if(!$invoiceDetail){

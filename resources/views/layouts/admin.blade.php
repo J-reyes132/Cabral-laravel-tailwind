@@ -42,9 +42,6 @@
                 <x-admin-nav-link :href="route('admin.orders.index')" :active="request()->routeIs('admin.orders.index')">
                     {{ __('orders') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.ordersmenu.index')" :active="request()->routeIs('admin.ordersmenu.index')">
-                    {{ __('orders menu') }}
-                </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.invoices.index')" :active="request()->routeIs('admin.invoices.index')">
                     {{ __('invoice') }}
                 </x-admin-nav-link>

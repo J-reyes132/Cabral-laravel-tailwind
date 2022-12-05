@@ -87,30 +87,33 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $order_menu = OrderMenu::where('order_id', $order->id)->get();
-        $invoice = new Invoice();
-        $invoice->order_id = $order->id;
-        $invoice->position = $order->customer_name;
-        $invoice->invoice_date = Carbon::now();
-        $invoice->registered_by = auth()->user()->name;
-        $invoice->save();
+                $order_menu = OrderMenu::all();
+        return view('admin.orders.show', compact('order_menu'));
 
-        if ($order_menu && count($order_menu)) {
-            foreach ($order_menu as $index ) {
-                $invoice_detail = new InvoiceOrder();
-                $invoice_detail->invoice_id = $invoice->id;
-                $invoice_detail->menu_id = $index->menu_id;
-                $invoice_detail->quantity = $index->quantity;
-                $invoice_detail->price = $index->price;
-                $invoice_detail->total = $index->price * $index->quantity;
-                $invoice_detail->save();
-            }
-        }
+        // $order_menu = OrderMenu::where('order_id', $order->id)->get();
+        // $invoice = new Invoice();
+        // $invoice->order_id = $order->id;
+        // $invoice->position = $order->customer_name;
+        // $invoice->invoice_date = Carbon::now();
+        // $invoice->registered_by = auth()->user()->name;
+        // $invoice->save();
 
-        $order->status = OrderStatus::Disable;
-        $order->save();
+        // if ($order_menu && count($order_menu)) {
+        //     foreach ($order_menu as $index ) {
+        //         $invoice_detail = new InvoiceOrder();
+        //         $invoice_detail->invoice_id = $invoice->id;
+        //         $invoice_detail->menu_id = $index->menu_id;
+        //         $invoice_detail->quantity = $index->quantity;
+        //         $invoice_detail->price = $index->price;
+        //         $invoice_detail->total = $index->price * $index->quantity;
+        //         $invoice_detail->save();
+        //     }
+        // }
 
-        return redirect()->route('admin.orders.index')->with('success', 'factura generada correctamente');
+        // $order->status = OrderStatus::Disable;
+        // $order->save();
+
+        // return redirect()->route('admin.orders.index')->with('success', 'factura generada correctamente');
     }
 
     /**

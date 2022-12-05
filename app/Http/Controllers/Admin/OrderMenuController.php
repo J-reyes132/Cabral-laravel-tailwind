@@ -20,11 +20,13 @@ class OrderMenuController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  int  $id
+     * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Order $order)
     {
+
         $order_menu = OrderMenu::all();
         return view('admin.ordersmenu.index', compact('order_menu'));
     }
@@ -52,13 +54,6 @@ class OrderMenuController extends Controller
         $order = Order::where('id', $request->order_id)->first();
         $menu = Menu::where('id', $request->menu_id)->first();
 
-        //$order->ordersmenu->attach($request->menu_id);
-        //  OrderMenu::Create([
-        //     'order_id' => $request->order_id,
-        //     'menu_id' => $request->menu_id,
-        //     'quantity' => $request->quantity,
-        //     'price' => $menu->price
-        //  ]);
         $order_menu = new OrderMenu();
         $order_menu->order_id =  $request->order_id;
         $order_menu->menu_id =  $request->menu_id;
@@ -67,7 +62,7 @@ class OrderMenuController extends Controller
         $order_menu->save();
 
 
-        return redirect()->route('admin.ordersmenu.index')->with('success', 'product added successfully');
+        return redirect()->route('admin.orders.index')->with('success', 'product added successfully');
     }
 
     /**
@@ -112,7 +107,7 @@ class OrderMenuController extends Controller
         $order_menu->quantity = $request->quantity;
         $order_menu->save();
 
-        return to_route('admin.ordersmenu.index')->with('success', 'Order updated successfully');
+        return to_route('admin.orders.index')->with('success', 'Order updated successfully');
     }
 
     /**
@@ -121,11 +116,11 @@ class OrderMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrderMenu $order_menu)
+    public function destroy(OrderMenu $order_menus)
     {
         //$order->reservations()->delete();
-        $order_menu->delete();
+        $order_menus->delete();
 
-        return to_route('admin.ordersmenu.index')->with('danger', 'Order deleted successfully');
+        return to_route('admin.orders.index')->with('danger', 'Order deleted successfully');
     }
 }

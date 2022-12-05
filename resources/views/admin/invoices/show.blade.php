@@ -95,7 +95,7 @@
                             <!--end tr-->
                             <tr>
                                 <th colspan="3"></th>
-                                <td class="text-sm font-bold"><b>Tax Rate</b></td>
+                                <td class="text-sm font-bold"><b>Tax & tip</b></td>
                                 <td class="text-sm font-bold"><b>${{$invoiceDetail->itbis}}</b></td>
                             </tr>
                             <!--end tr-->
