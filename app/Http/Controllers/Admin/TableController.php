@@ -6,6 +6,7 @@ use App\Models\Table;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TableStoreRequest;
+use App\Models\User;
 
 class TableController extends Controller
 {
@@ -16,6 +17,12 @@ class TableController extends Controller
      */
     public function index()
     {
+        $users = User::where('id',auth()->user()->id)->first();
+        if($users->role != 'Admin')
+        if($users->role != 'Frontdesk')
+        {
+            return redirect()->route('admin.index')->with('danger', 'this user does not have permission to access this module');
+        }
         $tables = Table::all();
         return view('admin.tables.index', compact('tables'));
     }

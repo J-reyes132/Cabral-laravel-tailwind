@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('order_menus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->unsigned()->index()->references('id')->on('orders');
-            $table->foreignId('menu_id')->unsigned()->index()->references('id')->on('menus');
+            $table->foreignId('order_menu_id')->unsigned()->index()->references('id')->on('menus');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->timestamps();

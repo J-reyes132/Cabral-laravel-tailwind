@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('invoice_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->unsigned()->index()->references('id')->on('invoices');
-            $table->foreignId('menu_id')->unsigned()->index()->references('menu_id')->on('order_menus');
+            $table->foreignId('menu_id')->unsigned()->index()->references('order_menu_id')->on('order_menus');
             $table->integer('quantity');
             $table->decimal('price');
             $table->decimal('total');

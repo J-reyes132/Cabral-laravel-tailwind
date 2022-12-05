@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuStoreRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
@@ -18,6 +19,11 @@ class MenuController extends Controller
      */
     public function index()
     {
+        $users = User::where('id',auth()->user()->id)->first();
+        if($users->role != 'Admin')
+        {
+            return redirect()->route('admin.index')->with('danger', 'this user does not have permission to access this module');
+        }
         $menus = Menu::all();
         return view('admin.menus.index', compact('menus'));
     }

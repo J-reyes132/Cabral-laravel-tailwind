@@ -9,6 +9,7 @@ use App\Models\InvoiceOrder;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderMenu;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Decimal;
 
@@ -22,6 +23,12 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $users = User::where('id',auth()->user()->id)->first();
+        if($users->role != 'Admin')
+        if($users->role != 'Cashier')
+        {
+            return redirect()->route('admin.index')->with('danger', 'this user does not have permission to access this module');
+        }
         $invoices =Invoice::all();
         return view('admin.invoices.index', compact('invoices'));
     }

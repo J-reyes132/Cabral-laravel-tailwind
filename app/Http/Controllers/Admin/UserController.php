@@ -17,6 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        $users = User::where('id',auth()->user()->id)->first();
+        if($users->role != 'Admin')
+        {
+            return redirect()->route('admin.index')->with('danger', 'this user does not have permission to access this module');
+        }
         $users = User::all();
         return view('admin.users.index', compact('users'));
     }

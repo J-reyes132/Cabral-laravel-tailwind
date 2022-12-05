@@ -36,7 +36,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('/reservations', ReservationController::class);
-Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(function() {
+Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function() {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/menus', MenuController::class);

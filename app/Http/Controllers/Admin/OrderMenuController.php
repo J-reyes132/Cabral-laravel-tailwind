@@ -24,10 +24,10 @@ class OrderMenuController extends Controller
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function index(Order $order)
+    public function index(Order $order_menu)
     {
 
-        $order_menu = OrderMenu::all();
+        $order_menu = OrderMenu::all();//where('order_id', $order_menu->id)->get();
         return view('admin.ordersmenu.index', compact('order_menu'));
     }
 
@@ -56,7 +56,7 @@ class OrderMenuController extends Controller
 
         $order_menu = new OrderMenu();
         $order_menu->order_id =  $request->order_id;
-        $order_menu->menu_id =  $request->menu_id;
+        $order_menu->order_menu_id =  $request->menu_id;
         $order_menu->quantity =  $request->quantity;
         $order_menu->price =  $menu->price;
         $order_menu->save();
@@ -102,7 +102,7 @@ class OrderMenuController extends Controller
 
         $menu = Menu::where('id', $request->menu_id)->first();
         $order_menu->order_id = $request->order_id;
-        $order_menu->menu_id = $request->menu_id;
+        $order_menu->order_menu_id = $request->menu_id;
         $order_menu->price = $menu->price;
         $order_menu->quantity = $request->quantity;
         $order_menu->save();
@@ -118,8 +118,7 @@ class OrderMenuController extends Controller
      */
     public function destroy(OrderMenu $order_menus)
     {
-        //$order->reservations()->delete();
-        $order_menus->delete();
+       $order_menus::destroy($order_menus->id);
 
         return to_route('admin.orders.index')->with('danger', 'Order deleted successfully');
     }

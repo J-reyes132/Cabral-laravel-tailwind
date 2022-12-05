@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationStoreRequest;
+use App\Models\User;
 
 class ReservationController extends Controller
 {
@@ -19,8 +20,14 @@ class ReservationController extends Controller
      */
     public function index()
     {
+        $users = User::where('id',auth()->user()->id)->first();
+        if($users->role != 'Admin')
+        if($users->role != 'Frontdesk')
+        {
+            return redirect()->route('admin.index')->with('danger', 'this user does not have permission to access this module');
+        }
         $reservations = Reservation::all();
-        
+
         return view('admin.reservations.index', compact('reservations'));
     }
 
