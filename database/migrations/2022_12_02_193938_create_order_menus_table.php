@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('order_menu_id')->unsigned()->index()->references('id')->on('menus');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
+            $table->string('status');
             $table->timestamps();
         });
     }

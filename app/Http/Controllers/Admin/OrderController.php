@@ -33,8 +33,9 @@ class OrderController extends Controller
         {
             return redirect()->route('admin.index')->with('danger', 'this user does not have permission to access this module');
         }
+        $tables = Table::where('status', TableStatus::Unavaliable)->get();
         $orders = Order::where('status',OrderStatus::Active)->get();
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders', 'tables'));
     }
 
     /**
@@ -113,11 +114,16 @@ class OrderController extends Controller
                 $invoice_detail->price = $index->price;
                 $invoice_detail->total = $index->price * $index->quantity;
                 $invoice_detail->save();
+
+                $index->status = OrderStatus::Disable;
+                $index->save();
             }
         }
 
         $order->status = OrderStatus::Disable;
         $order->save();
+
+
 
         return redirect()->route('admin.orders.index')->with('success', 'factura generada correctamente');
     }
@@ -142,7 +148,7 @@ class OrderController extends Controller
      */
     public function invoice(Order $order)
     {
-        $order_menu = OrderMenu::where('order_id', $order->id)->get();
+        $order_menu = OrderMenu::where('order_id', $order->id)->where('status',OrderStatus::Active)->get();
         $invoice = new Invoice();
         $invoice->order_id = $order->id;
         $invoice->position = $order->customer_name;
@@ -163,7 +169,7 @@ class OrderController extends Controller
         }
 
         $order->status = OrderStatus::Disable;
-
+        $order->save();
         return redirect()->route('admin.orders.index')->with('success', 'factura generada correctamente');
     }
 

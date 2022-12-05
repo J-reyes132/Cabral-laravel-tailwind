@@ -7,9 +7,13 @@
 
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        @foreach ($tables as $table)
+        <a href="{{ route('admin.orders.create') }}"
+        class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">{{$table->name}}</a>
+        @endforeach
         <div class="flex justify-end m-2 p-2">
             <a href="{{ route('admin.orders.create') }}"
-            class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white">New Order</a>
+            class="px-4 py-2 bg-blue-500 hover:bg-blue-700 rounded-lg text-white">New Order</a>
         </div>
 
 <div class="flex flex-col">

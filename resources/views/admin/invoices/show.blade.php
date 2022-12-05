@@ -112,18 +112,6 @@
                 </div>
             </div>
             <div class="flex justify-between p-4">
-                <div>
-                    <h3 class="text-xl">Terms And Condition :</h3>
-                    <ul class="text-xs list-disc list-inside">
-                        <li>All accounts are to be paid within 7 days from receipt of invoice.</li>
-                        <li>To be paid by cheque or credit card or direct payment online.</li>
-                        <li>If account is not paid within 7 days the credits details supplied.</li>
-                    </ul>
-                </div>
-                <div class="p-4">
-                    <h3>Signature</h3>
-                    <div class="text-4xl italic text-indigo-500">AAA</div>
-                </div>
             </div>
             <div class="w-full h-0.5 bg-indigo-500"></div>
 

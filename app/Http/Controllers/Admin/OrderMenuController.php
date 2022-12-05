@@ -27,7 +27,7 @@ class OrderMenuController extends Controller
     public function index(Order $order_menu)
     {
 
-        $order_menu = OrderMenu::all();//where('order_id', $order_menu->id)->get();
+        $order_menu = OrderMenu::where('status', OrderStatus::Active)->get();//where('order_id', $order_menu->id)->get();
         return view('admin.ordersmenu.index', compact('order_menu'));
     }
 
@@ -59,6 +59,7 @@ class OrderMenuController extends Controller
         $order_menu->order_menu_id =  $request->menu_id;
         $order_menu->quantity =  $request->quantity;
         $order_menu->price =  $menu->price;
+        $order_menu->status = OrderStatus::Active;
         $order_menu->save();
 
 
@@ -105,6 +106,7 @@ class OrderMenuController extends Controller
         $order_menu->order_menu_id = $request->menu_id;
         $order_menu->price = $menu->price;
         $order_menu->quantity = $request->quantity;
+        $order_menu->status = OrderStatus::Active;
         $order_menu->save();
 
         return to_route('admin.orders.index')->with('success', 'Order updated successfully');
